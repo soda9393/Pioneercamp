@@ -1,0 +1,56 @@
+﻿<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>지누켓 | 통합로그인</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=SUIT:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="login-body">
+  <header class="site-header">
+    <div class="logo-text">
+      <strong>지누켓</strong>
+    </div>
+  </header>
+
+  <main class="login-main simple">
+    <section class="login-card simple">
+      <div class="card-head">
+        <h2>지누켓</h2>
+      </div>
+
+      <form class="login-form" id="loginForm">
+        <label class="field">
+          <span>구분</span>
+          <select id="roleInput">
+            <option value="">선택하세요</option>
+            <option value="student">재학생</option>
+            <option value="graduate">졸업생</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>아이디</span>
+          <input type="text" id="idInput" placeholder="학번을 입력하세요!" />
+        </label>
+        <label class="field">
+          <span>비밀번호</span>
+          <input type="password" id="pwInput" placeholder="비밀번호 입력" />
+        </label>
+
+        <button class="primary" type="submit">로그인</button>
+        <p class="login-status" id="loginStatus" aria-live="polite"></p>
+
+        <div class="help-links">
+          <a href="#">아이디 찾기</a>
+          <a href="#">비밀번호 찾기</a>
+          <a href="#">학생인증</a>
+        </div>
+      </form>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

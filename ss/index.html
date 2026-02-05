@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>지누켓</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="left">
+      <button class="tab errands active" data-page="main">심부름</button>
+      <a class="tab home" href="../index.html">홈</a>
+      <button class="tab mypage" data-page="mypage">마이페이지</button>
+    </div>
+    <div class="center">
+  <div class="brand">
+    <img class="brand-mark" src="../gnuc.jpg" alt="GNU C 로고" />
+    <div>
+      <strong>지누켓</strong>
+      <span>응모 · 중고거래 · 심부름서비스</span>
+    </div>
+  </div>
+</div>
+    <div class="right">
+      <select id="campusSelect" aria-label="캠퍼스 선택">
+        <option value="all">전체 캠퍼스</option>
+        <option value="gaejwa">가좌캠퍼스</option>
+        <option value="chiram">칠암캠퍼스</option>
+        <option value="tongyeong">통영캠퍼스</option>
+      </select>
+    </div>
+  </header>
+
+  <div class="category-filter">
+    <button class="category-btn active" data-category="all">전체</button>
+    <button class="category-btn" data-category="배달">배달</button>
+    <button class="category-btn" data-category="알바">알바</button>
+    <button class="category-btn" data-category="구매대행">구매대행</button>
+  </div>
+
+  <main class="container">
+    <section class="list">
+      <ul id="itemsList"></ul>
+    </section>
+  </main>
+
+  <!-- 상세 정보 모달 -->
+  <div id="detailModal" class="modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle"></h2>
+        <div id="closedBadge" class="closed-badge" style="display:none">마감됨</div>
+        <button class="modal-close" id="modalClose">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-info">
+          <p><strong>요청 내용:</strong> <span id="modalDetail"></span></p>
+          <p><strong>가격:</strong> <span id="modalPrice" class="price-highlight"></span></p>
+          <p><strong>캠퍼스:</strong> <span id="modalCampus"></span></p>
+          <p><strong>희망일자:</strong> <span id="modalDate"></span></p>
+          <p><strong>모집 현황:</strong> <span id="modalStatus"></span></p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="applyBtn" class="apply-btn">지원하기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 글쓰기 모달 -->
+  <div id="writeModal" class="modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>새 요청 작성</h2>
+        <button class="modal-close" id="writeModalClose">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="writeForm">
+          <div class="form-group">
+            <label>제목</label>
+            <input type="text" id="writeTitle" placeholder="제목을 입력하세요" required>
+          </div>
+          <div class="form-group">
+            <label>상세 설명</label>
+            <textarea id="writeDetail" placeholder="상세 내용을 입력하세요" required></textarea>
+          </div>
+          <div class="form-group">
+            <label>가격</label>
+            <div class="price-input-wrapper">
+              <span class="price-symbol">₩</span>
+              <input type="text" id="writePrice" placeholder="5000" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>카테고리</label>
+            <select id="writeCategory" required>
+              <option value="배달">배달</option>
+              <option value="알바">알바</option>
+              <option value="구매대행">구매대행</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>캠퍼스</label>
+            <select id="writeCampus" required>
+              <option value="gaejwa">가좌캠퍼스</option>
+              <option value="chiram">칠암캠퍼스</option>
+              <option value="tongyeong">통영캠퍼스</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>희망 인원</label>
+            <input type="number" id="writeCapacity" min="1" value="1" required>
+          </div>
+          <div class="form-group">
+            <label>희망일자</label>
+            <input type="datetime-local" id="writeDate" step="600" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelWriteBtn" class="cancel-btn">취소</button>
+        <button id="submitWriteBtn" class="apply-btn">작성 완료</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 하단 글쓰기 버튼 -->
+  <button id="writeBtn" class="write-btn">+</button>
+
+  <template id="itemTemplate">
+    <li class="item-card" data-id="">
+      <div class="item-body">
+        <span class="item-type"></span>
+        <h3 class="item-title"></h3>
+        <p class="item-detail"></p>
+        <div class="item-stats">
+          <span class="item-capacity"></span>
+          <span class="item-applicants"></span>
+        </div>
+        <div class="item-meta">
+          <span class="item-price"></span>
+          <span class="item-campus"></span>
+        </div>
+        <div class="item-closed" style="display:none">마감됨</div>
+      </div>
+    </li>
+  </template>
+
+  <!-- 마이페이지 -->
+  <div id="mypagePage" class="page" style="display:none">
+    <div class="container">
+      <div class="mypage-tabs">
+        <button class="mypage-tab active" data-tab="requests">내 요청</button>
+        <button class="mypage-tab" data-tab="applies">지원 현황</button>
+        <button class="mypage-tab" data-tab="chats">채팅</button>
+      </div>
+
+      <!-- 내 요청 -->
+      <div id="requestsTab" class="mypage-content">
+        <h3>내가 올린 요청</h3>
+        <ul id="myRequestsList" class="mypage-list"></ul>
+      </div>
+
+      <!-- 지원 현황 -->
+      <div id="appliesTab" class="mypage-content" style="display:none">
+        <h3>내가 지원한 요청</h3>
+        <ul id="myAppliesList" class="mypage-list"></ul>
+      </div>
+
+      <!-- 채팅 -->
+      <div id="chatsTab" class="mypage-content" style="display:none">
+        <h3>채팅</h3>
+        <div class="chat-section">
+          <div class="chat-list-container">
+            <ul id="chatList" class="chat-list"></ul>
+          </div>
+          <div class="chat-content-container">
+            <div id="chatContent" class="chat-content">
+              <p style="text-align:center;color:#999;padding:40px">채팅을 선택하세요</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 채팅 모달 -->
+  <div id="chatModal" class="modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content chat-modal-content">
+      <div class="modal-header">
+        <h2 id="chatTitle"></h2>
+        <button class="modal-close" id="chatModalClose">✕</button>
+      </div>
+      <div id="chatMessages" class="chat-messages"></div>
+      <div class="chat-input-area">
+        <input type="text" id="chatInput" placeholder="메시지를 입력하세요" />
+        <button id="chatSendBtn">전송</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 내 요청 상세 모달 -->
+  <div id="myRequestDetailModal" class="modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="requestDetailTitle"></h2>
+        <button class="modal-close" id="requestDetailClose">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-info">
+          <p><strong>요청 내용:</strong> <span id="requestDetailContent"></span></p>
+          <p><strong>가격:</strong> <span id="requestDetailPrice"></span></p>
+          <p><strong>캠퍼스:</strong> <span id="requestDetailCampus"></span></p>
+          <p><strong>희망일자:</strong> <span id="requestDetailDate"></span></p>
+          <p><strong>모집 현황:</strong> <span id="requestDetailStatus"></span></p>
+        </div>
+        <div class="applicants-section">
+          <h4>지원자 목록</h4>
+          <ul id="applicantsList" class="applicants-list"></ul>
+        </div>
+        <div class="request-actions">
+          <button id="integratedChatBtn" class="apply-btn">통합 채팅</button>
+        </div>
+        <div class="finish-actions">
+          <button id="closeRequestBtn" class="cancel-btn">마감</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
