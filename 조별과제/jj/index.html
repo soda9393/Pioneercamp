@@ -1,0 +1,221 @@
+﻿<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>지누켓 | 응모·중고거래·심부름</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-blur"></div>
+  <header class="site-header">
+    <div class="brand">
+      <img class="brand-mark" src="../gnuc.jpg" alt="GNU C 로고" />
+      <div>
+        <strong>지누켓</strong>
+        <span>응모 · 중고거래 · 심부름서비스</span>
+      </div>
+    </div>
+    <div class="header-cta">
+      <a class="ghost" href="../index.html">홈</a>
+      <button class="primary" type="button">로그인</button>
+    </div>
+  </header>
+  <main>
+    <section class="section active" id="used">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Campus Used Market</p>
+          <h2>중고거래 마켓</h2>
+          <p class="lead">검색, 필터, 정렬, 찜, 판매글 등록까지 한 번에.</p>
+        </div>
+        <div class="section-actions">
+          <button class="primary" type="button" id="openForm">판매글 등록</button>
+        </div>
+      </div>
+
+      <div class="filters">
+        <div class="input-group">
+          <label for="campusFilter">캠퍼스</label>
+          <select id="campusFilter">
+            <option value="all">전체 캠퍼스</option>
+            <option value="가좌 캠퍼스">가좌 캠퍼스</option>
+            <option value="칠암 캠퍼스">칠암 캠퍼스</option>
+            <option value="내동 캠퍼스">내동 캠퍼스</option>
+            <option value="통영 캠퍼스">통영 캠퍼스</option>
+            <option value="창원산학캠퍼스">창원산학캠퍼스</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="searchInput">검색</label>
+          <input id="searchInput" type="search" placeholder="상품명, 설명, 위치 검색" />
+        </div>
+        <div class="input-group">
+          <label for="categoryFilter">카테고리</label>
+          <select id="categoryFilter">
+            <option value="all">전체</option>
+            <option value="디지털">디지털</option>
+            <option value="교재">교재</option>
+            <option value="생활">생활</option>
+            <option value="취미">취미</option>
+            <option value="기타">기타</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="buildingFilter">거래건물지정</label>
+          <select id="buildingFilter">
+            <option value="all">전체 건물</option>
+            <option value="정문">정문</option>
+            <option value="후문">후문</option>
+            <option value="도서관">도서관</option>
+            <option value="느티마루">느티마루</option>
+            <option value="공학5호관">공학5호관</option>
+            <option value="아람관">아람관</option>
+            <option value="월계관">월계관</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="sortFilter">정렬</label>
+          <select id="sortFilter">
+            <option value="latest">최신순</option>
+            <option value="price-low">가격 낮은순</option>
+            <option value="price-high">가격 높은순</option>
+            <option value="popular">인기순</option>
+          </select>
+        </div>
+        <div class="input-group inline">
+          <label>
+            <input type="checkbox" id="wishOnly" />
+            찜한 상품만
+          </label>
+          <button class="ghost" type="button" id="resetFilters">필터 초기화</button>
+        </div>
+      </div>
+
+      <div class="summary-bar">
+        <p>
+          <strong id="resultCount">0</strong>개의 상품 · 찜한 상품 <strong id="wishCount">0</strong>개
+        </p>
+        <p class="note">찜한 상품과 판매글은 브라우저에 저장됩니다.</p>
+      </div>
+
+      <div class="grid" id="listingGrid"></div>
+
+      <div class="form-panel" id="formPanel">
+        <div class="form-header">
+          <div>
+            <h3>판매글 등록</h3>
+            <p>학교 내 거래를 위한 기본 정보를 입력해주세요.</p>
+          </div>
+          <button class="ghost" type="button" id="closeForm">닫기</button>
+        </div>
+        <form id="listingForm">
+          <div class="form-grid">
+            <div class="input-group">
+              <label for="titleInput">상품명</label>
+              <input id="titleInput" type="text" required placeholder="예: 전기회로 교재" />
+            </div>
+            <div class="input-group">
+              <label for="imageInput">상품 사진</label>
+              <input id="imageInput" type="file" accept="image/*" />
+            </div>
+            <div class="input-group">
+              <label for="priceInput">가격 (원)</label>
+              <input id="priceInput" type="number" min="0" required placeholder="12000" />
+            </div>
+            <div class="input-group">
+              <label for="campusInput">캠퍼스</label>
+              <select id="campusInput" required>
+                <option value="">선택</option>
+                <option value="가좌 캠퍼스">가좌 캠퍼스</option>
+                <option value="칠암 캠퍼스">칠암 캠퍼스</option>
+                <option value="내동 캠퍼스">내동 캠퍼스</option>
+                <option value="통영 캠퍼스">통영 캠퍼스</option>
+                <option value="창원산학캠퍼스">창원산학캠퍼스</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="categoryInput">카테고리</label>
+              <select id="categoryInput" required>
+                <option value="">선택</option>
+                <option value="디지털">디지털</option>
+                <option value="교재">교재</option>
+                <option value="생활">생활</option>
+                <option value="취미">취미</option>
+                <option value="기타">기타</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="buildingInput">거래 건물</label>
+              <select id="buildingInput" required>
+                <option value="">선택</option>
+                <option value="정문">정문</option>
+                <option value="후문">후문</option>
+                <option value="도서관">도서관</option>
+                <option value="느티마루">느티마루</option>
+                <option value="공학5호관">공학5호관</option>
+                <option value="아람관">아람관</option>
+                <option value="월계관">월계관</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="conditionInput">상태</label>
+              <select id="conditionInput" required>
+                <option value="">선택</option>
+                <option value="새상품">새상품</option>
+                <option value="거의 새 것">거의 새 것</option>
+                <option value="사용감 있음">사용감 있음</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="sellerInput">판매자 닉네임</label>
+              <input id="sellerInput" type="text" required placeholder="캠퍼스라이프" />
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="descInput">설명</label>
+            <textarea id="descInput" rows="4" required placeholder="거래 가능 시간, 상세 상태 등을 적어주세요."></textarea>
+          </div>
+          <div class="image-preview" id="imagePreview">
+            <span>이미지 미리보기</span>
+          </div>
+          <div class="form-actions">
+            <button class="ghost" type="reset">초기화</button>
+            <button class="primary" type="submit">등록하기</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="detailModal" aria-hidden="true">
+    <div class="modal-overlay" data-close="modal"></div>
+    <div class="modal-card">
+      <button class="modal-close" type="button" data-close="modal">닫기</button>
+      <div class="modal-content" id="modalContent"></div>
+    </div>
+  </div>
+
+  <div class="modal" id="chatModal" aria-hidden="true">
+    <div class="modal-overlay" data-close="chat"></div>
+    <div class="modal-card chat-card">
+      <button class="modal-close" type="button" data-close="chat">닫기</button>
+      <div class="modal-content">
+        <h3 id="chatTitle">채팅</h3>
+        <div class="chat-thread" id="chatThread"></div>
+        <form id="chatForm" class="chat-form">
+          <input type="text" id="chatInput" placeholder="메시지를 입력하세요" required />
+          <button class="primary" type="submit">전송</button>
+        </form>
+        <p class="note">채팅 내용은 브라우저에만 저장됩니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

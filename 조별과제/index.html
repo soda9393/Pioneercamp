@@ -1,0 +1,227 @@
+﻿<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>캠퍼스 마켓 | 펀딩·중고·심부름</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-blur"></div>
+  <header class="site-header">
+    <div class="brand">
+      <img class="brand-mark" src="gnuc.jpg" alt="GNU C 로고" />
+      <div>
+        <strong>지누켓</strong>
+        <span>응모 · 중고거래 · 심부름서비스</span>
+      </div>
+    </div>
+    <div class="header-cta">
+      <button class="ghost" type="button" data-nav="home">홈</button>
+      <button class="primary" type="button" data-open="login">로그인</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="section active" id="home">
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">학생 생활을 더 가볍게</p>
+          <h1>오늘 필요한 거래, 학교 안에서 빠르게.</h1>
+          <p class="lead">
+            펀딩으로 동아리 프로젝트를 만들고, 중고거래로 필요한 물건을 찾고,
+            심부름서비스로 시간까지 아껴요.
+          </p>
+        </div>
+        <div class="hero-cards">
+          <button class="tile" type="button" data-tile="funding">
+            <img class="tile-corner" src="subC.jpg" alt="" aria-hidden="true" />
+            <span class="tile-tag">FUNDING</span>
+            <h2>응모</h2>
+            <p>전공 프로젝트부터 전시까지, 학교 안에서 응원하고 함께 만들어요.</p>
+            <span class="tile-cta">펀딩 페이지 준비중</span>
+          </button>
+          <button class="tile highlight" type="button" data-tile="used">
+            <span class="tile-tag">USED MARKET</span>
+            <h2>중고거래</h2>
+            <p>같은 건물, 같은 캠퍼스에서 원하는 물건을 빠르게 찾습니다.</p>
+            <span class="tile-cta">중고거래로 이동</span>
+          </button>
+          <button class="tile" type="button" data-tile="service">
+            <span class="tile-tag">RUN ERRAND</span>
+            <h2>심부름서비스</h2>
+            <p>택배 픽업, 자료 출력, 간단 심부름을 동료와 연결해요.</p>
+            <span class="tile-cta">심부름 매칭 준비중</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="used">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Campus Used Market</p>
+          <h2>중고거래 마켓</h2>
+          <p class="lead">검색, 필터, 정렬, 찜, 판매글 등록까지 한 번에.</p>
+        </div>
+        <div class="section-actions">
+          <button class="ghost" type="button" id="backHome">처음 화면으로</button>
+          <button class="primary" type="button" id="openForm">판매글 등록</button>
+        </div>
+      </div>
+
+      <div class="filters">
+        <div class="input-group">
+          <label for="searchInput">검색</label>
+          <input id="searchInput" type="search" placeholder="상품명, 설명, 위치 검색" />
+        </div>
+        <div class="input-group">
+          <label for="categoryFilter">카테고리</label>
+          <select id="categoryFilter">
+            <option value="all">전체</option>
+            <option value="디지털">디지털</option>
+            <option value="교재">교재</option>
+            <option value="생활">생활</option>
+            <option value="취미">취미</option>
+            <option value="기타">기타</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="buildingFilter">건물</label>
+          <select id="buildingFilter">
+            <option value="all">전체 건물</option>
+            <option value="공학관">공학관</option>
+            <option value="중앙도서관">중앙도서관</option>
+            <option value="학생회관">학생회관</option>
+            <option value="기숙사">기숙사</option>
+            <option value="운동장">운동장</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="sortFilter">정렬</label>
+          <select id="sortFilter">
+            <option value="latest">최신순</option>
+            <option value="price-low">가격 낮은순</option>
+            <option value="price-high">가격 높은순</option>
+            <option value="popular">인기순</option>
+          </select>
+        </div>
+        <div class="input-group inline">
+          <label>
+            <input type="checkbox" id="wishOnly" />
+            찜한 상품만
+          </label>
+          <button class="ghost" type="button" id="resetFilters">필터 초기화</button>
+        </div>
+      </div>
+
+      <div class="summary-bar">
+        <p>
+          <strong id="resultCount">0</strong>개의 상품 · 찜한 상품 <strong id="wishCount">0</strong>개
+        </p>
+        <p class="note">찜한 상품과 판매글은 브라우저에 저장됩니다.</p>
+      </div>
+
+      <div class="grid" id="listingGrid"></div>
+
+      <div class="form-panel" id="formPanel">
+        <div class="form-header">
+          <div>
+            <h3>판매글 등록</h3>
+            <p>학교 내 거래를 위한 기본 정보를 입력해주세요.</p>
+          </div>
+          <button class="ghost" type="button" id="closeForm">닫기</button>
+        </div>
+        <form id="listingForm">
+          <div class="form-grid">
+            <div class="input-group">
+              <label for="titleInput">상품명</label>
+              <input id="titleInput" type="text" required placeholder="예: 전기회로 교재" />
+            </div>
+            <div class="input-group">
+              <label for="priceInput">가격 (원)</label>
+              <input id="priceInput" type="number" min="0" required placeholder="12000" />
+            </div>
+            <div class="input-group">
+              <label for="categoryInput">카테고리</label>
+              <select id="categoryInput" required>
+                <option value="">선택</option>
+                <option value="디지털">디지털</option>
+                <option value="교재">교재</option>
+                <option value="생활">생활</option>
+                <option value="취미">취미</option>
+                <option value="기타">기타</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="buildingInput">거래 건물</label>
+              <select id="buildingInput" required>
+                <option value="">선택</option>
+                <option value="공학관">공학관</option>
+                <option value="중앙도서관">중앙도서관</option>
+                <option value="학생회관">학생회관</option>
+                <option value="기숙사">기숙사</option>
+                <option value="운동장">운동장</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="conditionInput">상태</label>
+              <select id="conditionInput" required>
+                <option value="">선택</option>
+                <option value="새상품">새상품</option>
+                <option value="거의 새 것">거의 새 것</option>
+                <option value="사용감 있음">사용감 있음</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="sellerInput">판매자 닉네임</label>
+              <input id="sellerInput" type="text" required placeholder="캠퍼스라이프" />
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="descInput">설명</label>
+            <textarea id="descInput" rows="4" required placeholder="거래 가능 시간, 상세 상태 등을 적어주세요."></textarea>
+          </div>
+          <div class="form-actions">
+            <button class="ghost" type="reset">초기화</button>
+            <button class="primary" type="submit">등록하기</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="detailModal" aria-hidden="true">
+    <div class="modal-overlay" data-close="modal"></div>
+    <div class="modal-card">
+      <button class="modal-close" type="button" data-close="modal">닫기</button>
+      <div class="modal-content" id="modalContent"></div>
+    </div>
+  </div>
+
+  <div class="modal" id="loginModal" aria-hidden="true">
+    <div class="modal-overlay" data-close="login"></div>
+    <div class="modal-card">
+      <button class="modal-close" type="button" data-close="login">닫기</button>
+      <div class="modal-content">
+        <h3>로그인</h3>
+        <p>캠퍼스 마켓 서비스를 이용하려면 로그인하세요.</p>
+        <div class="card-actions">
+          <button class="primary" type="button">로그인</button>
+          <button class="ghost" type="button" data-close="login">닫기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a class="corner-graphic-link" href="gg/index.html" aria-label="GG 페이지로 이동">
+    <img class="corner-graphic" src="gg.png" alt="" />
+  </a>
+
+  <script src="script.js"></script>
+</body>
+</html>

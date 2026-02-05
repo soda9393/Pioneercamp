@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>상품 목록 - 캠퍼스</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar topbar-sub">
+    <div class="left">
+      <button class="icon back" id="backBtn" aria-label="뒤로 가기">◀</button>
+    </div>
+    <div class="center">
+      <button class="location-btn" id="locBtn">
+        <span id="locName">North Campus</span>
+        <span class="chev">▾</span>
+      </button>
+    </div>
+    <div class="right">
+      <button class="icon" id="searchBtn" aria-label="검색">🔍</button>
+      <button class="icon" id="addBtn" aria-label="등록">＋</button>
+    </div>
+  </header>
+
+  <!-- 상세 정보 모달 -->
+  <div id="detailModalSub" class="modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitleSub"></h2>
+        <button class="modal-close" id="modalCloseSub">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-info">
+          <p><strong>요청 내용:</strong> <span id="modalDetailSub"></span></p>
+          <p><strong>가격:</strong> <span id="modalPriceSub"></span></p>
+          <p><strong>캠퍼스:</strong> <span id="modalCampusSub"></span></p>
+          <p><strong>희망인원:</strong> <span id="modalCapacitySub"></span></p>
+          <p><strong>현재 신청:</strong> <span id="modalApplicantsSub"></span></p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="applyBtnSub" class="apply-btn">지원하기</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+    <section class=\"detail-section\">
+      <div class=\"detail-card\">
+        <h2 id=\"detailTitleSub\" class=\"detail-title\"></h2>
+        <p id=\"detailTypeSub\" class=\"detail-type\"></p>
+        <div class=\"detail-main\">
+          <p><strong>요청 내용:</strong> <span id=\"detailDetailSub\"></span></p>
+          <p><strong>예상 비용:</strong> <span id=\"detailPriceSub\" class=\"price-highlight\"></span></p>
+          <p><strong>서비스 위치:</strong> <span id=\"detailCampusSub\"></span></p>
+          <p><strong>모집 현황:</strong> <span id=\"detailStatusSub\"></span></p>
+        </div>
+        <div class=\"detail-actions\">
+          <button id=\"detailApplyBtn\" class=\"apply-btn\">지원하기</button>
+        </div>
+      </div>
+    </section>
+
+    <section class=\"list\">
+      <h3>\ucd94\ucc9c \uc694\uccad</h3>
+      <ul id="itemsListSub"></ul>
+    </section>
+  </main>
+
+  <template id="itemTemplateSub">
+    <li class="item-card" data-id="">
+      <div class="item-body">
+        <span class="item-type"></span>
+        <h3 class="item-title"></h3>
+        <p class="item-detail"></p>
+        <div class="item-stats">
+          <span class="item-capacity"></span>
+          <span class="item-applicants"></span>
+        </div>
+        <div class="item-meta">
+          <span class="item-price"></span>
+          <span class="item-campus"></span>
+        </div>
+      </div>
+    </li>
+  </template>
+
+  <script>
+  // 간단한 동작: 뒤로가기 및 더미 렌더
+  document.getElementById('backBtn').addEventListener('click', ()=>history.back());
+  
+  const modalSub = document.getElementById('detailModalSub');
+  const modalCloseSub = document.getElementById('modalCloseSub');
+  const modalOverlaySub = modalSub.querySelector('.modal-overlay');
+  const applyBtnSub = document.getElementById('applyBtnSub');
+  
+  function openModalSub(itemData) {
+    document.getElementById('modalTitleSub').textContent = itemData.title;
+    document.getElementById('modalDetailSub').textContent = itemData.detail;
+    document.getElementById('modalPriceSub').textContent = itemData.price;
+    document.getElementById('modalCampusSub').textContent = campusMap[itemData.campus] || itemData.campus;
+    document.getElementById('modalCapacitySub').textContent = itemData.capacity + '명';
+    document.getElementById('modalApplicantsSub').textContent = itemData.applicants + '명';
+    
+    const canApply = itemData.applicants < itemData.capacity;
+    applyBtnSub.textContent = canApply ? '지원하기' : '마감됨';
+    applyBtnSub.classList.toggle('full', !canApply);
+    applyBtnSub.disabled = !canApply;
+    applyBtnSub.dataset.item = JSON.stringify(itemData);
+    
+    modalSub.classList.add('active');
+  }
+  
+  function closeModalSub() {
+    modalSub.classList.remove('active');
+  }
+  
+  modalCloseSub.addEventListener('click', closeModalSub);
+  modalOverlaySub.addEventListener('click', closeModalSub);
+  
+  applyBtnSub.addEventListener('click', (e) => {
+    const itemData = JSON.parse(e.target.dataset.item);
+    if(itemData.applicants < itemData.capacity) {
+      itemData.applicants++;
+      closeModalSub();
+    }
+  });
+  
+  const campusMap = {'north':'North캠퍼스','south':'South캠퍼스','east':'East캠퍼스'};
+  const sample = [
+    {title:'책 배달 (교재 배송)',price:'₩3,000',campus:'north',detail:'교재 1권 배달 — 1일',type:'배달',typeClass:'delivery',capacity:2,applicants:1},
+    {title:'대리구매: 마트',price:'₩5,000',campus:'north',detail:'마트 구매 및 전달 — 2시간',type:'구매대행',typeClass:'purchase',capacity:3,applicants:0}
+  ];
+  const listRoot = document.getElementById('itemsListSub');
+  const tpl = document.getElementById('itemTemplateSub');
+  
+  sample.forEach(it=>{
+    const node = tpl.content.cloneNode(true);
+    const typeEl = node.querySelector('.item-type');
+    typeEl.textContent = it.type || '';
+    if(it.typeClass) typeEl.classList.add(`type-${it.typeClass}`);
+    node.querySelector('.item-title').textContent = it.title;
+    node.querySelector('.item-detail').textContent = it.detail || '';
+    node.querySelector('.item-price').textContent = it.price;
+    node.querySelector('.item-campus').textContent = campusMap[it.campus] || it.campus;
+    node.querySelector('.item-capacity').textContent = `희망 ${it.capacity || 1}명`;
+    node.querySelector('.item-applicants').textContent = `신청 ${it.applicants || 0}명`;
+    listRoot.appendChild(node);
+  });
+  
+  listRoot.addEventListener('click', (e) => {
+    const card = e.target.closest('.item-card');
+    if(card) {
+      const idx = Array.from(listRoot.children).indexOf(card);
+      openModalSub(sample[idx]);
+    }
+  });
+  </script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+:root{
+  --bg:#FFE0CC;
+  --card:#ffffff;
+  --accent:#FF8A65;
+  --muted:#6b6b6b;
+}
+*{box-sizing:border-box}
+body{font-family:Inter, system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;margin:0;background:var(--bg);color:#222}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;background:#fff;border-bottom:1px solid #eee;position:sticky;top:0;z-index:10;min-height:72px}
+.topbar .left{display:flex;align-items:center;gap:5px}
+.tab{background:transparent;border:0;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700;font-size:16px}
+.tab.active{background:linear-gradient(90deg,var(--accent),#ff7043);color:#fff}
+.tab.mypage{color:var(--muted)}
+.topbar .center{font-weight:800;font-size:18px;display:flex;justify-content:center;flex:1}
+.topbar .brand{display:flex;align-items:center;gap:10px}
+.topbar .brand-mark{width:48px;height:48px;border-radius:14px;object-fit:contain;display:block}
+.topbar .brand strong{display:block;font-size:16px;color:#222}
+.topbar .brand span{display:block;font-size:12px;color:#666}
+.center-logo{background:transparent;border:0;cursor:pointer;padding:4px 8px;border-radius:8px;transition:all 0.2s;display:flex;align-items:center;gap:8px}
+.center-logo:hover{opacity:0.8}
+.logo-img{height:40px;object-fit:contain}
+.logo-text{font-weight:800;font-size:18px;color:#222}
+.topbar .right select{padding:10px;border-radius:10px;border:1px solid #e6e6e6;font-size:15px}
+
+/* 기능별 필터 */
+.category-filter{display:flex;gap:10px;padding:12px 20px;background:#FFE0CC;border-bottom:1px solid #eee;overflow-x:auto}
+.category-btn{padding:8px 14px;border-radius:20px;border:1px solid #ddd;background:#fff;cursor:pointer;font-weight:600;font-size:14px;white-space:nowrap;transition:all 0.2s}
+.category-btn:hover{background:#eee}
+.category-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+.container{max-width:1100px;margin:20px auto;padding:0 16px}
+.featured{margin-bottom:18px}
+.thumb{height:220px;background:linear-gradient(135deg,#ffd4c7,#ffe0b2);border-radius:12px;display:flex;align-items:flex-end;padding:16px;color:#333}
+.thumb-info h2{margin:0 0 6px 0}
+.thumb-info p{margin:0;color:var(--muted)}
+
+.list ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.item-card{background:#ffffff;border-radius:10px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 6px rgba(0,0,0,0.06);padding:14px;cursor:pointer;transition:all 0.2s;position:relative}
+.item-card:hover{box-shadow:0 4px 12px rgba(0,0,0,0.12);background:#FFCFAA;}
+.item-card.closed{background:#d9d9d9;cursor:not-allowed}
+.item-card.closed:hover{box-shadow:0 1px 6px rgba(0,0,0,0.06);background:#d9d9d9}
+.item-card.closed::before{content:'마감됨';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.7);color:#fff;padding:12px 24px;border-radius:8px;font-weight:700;font-size:16px;z-index:10}
+.item-body{display:flex;flex-direction:column;gap:8px}
+
+/* 서비스 유형 뱃지 */
+.item-type{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:700;color:#fff}
+.type-delivery{background:#FF8A65}
+.type-purchase{background:#4DB6AC}
+.type-parttime{background:#9575CD}
+
+.item-title{margin:0;font-size:16px}
+.item-detail{margin:0;color:var(--muted);font-size:13px}
+.item-meta{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+
+/* 희망인원/신청인원 스타일 */
+.item-stats{display:flex;gap:10px;font-size:13px;color:var(--muted);align-items:center}
+.item-stats span{background:rgba(0,0,0,0.04);padding:6px 10px;border-radius:8px}
+
+/* 마감 표시 */
+.item-closed{display:none}
+
+/* 모달 스타일 */
+.modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:1000}
+.modal.active{display:flex;align-items:center;justify-content:center}
+.modal-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5)}
+.modal-content{position:relative;background:#fff;border-radius:12px;width:90%;max-width:500px;max-height:80vh;overflow-y:auto;box-shadow:0 10px 40px rgba(0,0,0,0.2)}
+.modal-header{padding:20px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center}
+.modal-header h2{margin:0;font-size:18px}
+.closed-badge{background:#999;color:#fff;padding:8px 16px;border-radius:8px;font-weight:700;font-size:14px;white-space:nowrap}
+.modal-close{background:transparent;border:0;font-size:24px;cursor:pointer;padding:0;width:32px;height:32px;display:flex;align-items:center;justify-content:center}
+.modal-body{padding:20px}
+.modal-info p{margin:0 0 12px 0;font-size:14px;line-height:1.6}
+
+/* 추천 요청 스타일 */
+.modal-recommendations{margin-top:20px;padding-top:20px;border-top:1px solid #eee}
+.modal-recommendations h4{margin:0 0 12px 0;font-size:14px}
+.modal-recommendations ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.rec-item{padding:10px;background:#f7f7f8;border-radius:8px;font-size:12px;line-height:1.5;transition:all 0.2s}
+.rec-item:hover{background:#eee}
+.rec-meta{color:var(--muted);font-size:11px}
+.modal-footer{padding:20px;border-top:1px solid #eee;display:flex;gap:10px}
+.apply-btn{flex:1;padding:12px;background:linear-gradient(90deg,var(--accent),#ff7043);color:#fff;border:0;border-radius:8px;font-weight:700;cursor:pointer;font-size:16px}
+.apply-btn:hover{opacity:0.9}
+.apply-btn.full{background:#ddd;color:#666}
+.apply-btn.full:hover{opacity:1;cursor:not-allowed}
+
+/* 글쓰기 버튼 */
+.write-btn{position:fixed;bottom:30px;right:30px;width:60px;height:60px;border-radius:999px;background:linear-gradient(90deg,var(--accent),#ff7043);color:#fff;border:0;font-size:32px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.15);z-index:100;transition:all 0.2s}
+.write-btn:hover{transform:scale(1.1);box-shadow:0 6px 16px rgba(0,0,0,0.2)}
+
+/* 폼 스타일 */
+.form-group{margin-bottom:16px;display:flex;flex-direction:column}
+.form-group label{font-weight:700;font-size:14px;margin-bottom:6px;color:#222}
+.form-group input,.form-group textarea,.form-group select{padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px;font-family:inherit}
+.form-group textarea{resize:vertical;min-height:80px}
+
+/* 가격 입력 필드 */
+.price-input-wrapper{display:flex;align-items:center;border:1px solid #ddd;border-radius:8px;padding-left:8px;overflow:hidden}
+.price-symbol{font-weight:700;color:#666;margin-right:4px;font-size:14px}
+.price-input-wrapper input{border:none;flex:1;padding:10px;font-size:14px;font-family:inherit}
+.price-input-wrapper input:focus{outline:none}
+
+.cancel-btn{padding:12px;background:#eee;border:0;border-radius:8px;cursor:pointer;font-weight:700;color:#666}
+
+/* 상세 페이지 스타일 */
+.detail-section{margin-bottom:30px}
+.detail-card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.detail-title{margin:0 0 12px 0;font-size:20px;line-height:1.4}
+.detail-type{display:inline-block;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:700;color:#fff;background:var(--accent);margin-bottom:16px}
+.detail-main{margin:20px 0}
+.detail-main p{margin:0 0 14px 0;font-size:15px;line-height:1.6}
+.price-highlight{font-weight:700;color:var(--accent);font-size:16px}
+.detail-actions{margin-top:20px;display:flex;gap:10px}
+.detail-actions button{flex:1}
+.item-title{margin:0 0 8px 0;font-size:16px}
+.item-meta{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+
+
+
+@media (max-width:1024px){
+  .list ul{grid-template-columns:repeat(3,1fr)}
+}
+
+@media (max-width:768px){
+  .list ul{grid-template-columns:repeat(2,1fr)}
+}
+
+@media (max-width:480px){
+  .list ul{grid-template-columns:repeat(1,1fr)}
+}
+
+/* 당근마켓 스타일 상단바 (하위페이지용) */
+.topbar-sub{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:#fff;border-bottom:1px solid #eee}
+.topbar-sub .left{width:48px}
+.topbar-sub .right{display:flex;gap:8px;align-items:center}
+.topbar-sub .center{flex:1;display:flex;justify-content:center}
+.topbar-sub .icon{background:transparent;border:0;font-size:18px;padding:8px;border-radius:8px;cursor:pointer}
+.topbar-sub .back{font-weight:700}
+.location-btn{background:transparent;border:0;font-weight:700;display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.location-btn .chev{font-size:12px;color:var(--muted)}
+
+/* 토스트 메시지 */
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:12px 20px;border-radius:8px;font-size:14px;z-index:1001;animation:slideUp 0.3s ease-out;pointer-events:none}
+@keyframes slideUp{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes slideDown{from{opacity:1;transform:translateX(-50%) translateY(0)}to{opacity:0;transform:translateX(-50%) translateY(10px)}}
+
+/* 마이페이지 */
+.page{transition:opacity 0.2s}
+.mypage-tabs{display:flex;gap:10px;padding:15px 20px;border-bottom:1px solid #eee;background:#fff}
+.mypage-tab{padding:8px 16px;border-radius:20px;border:1px solid #ddd;background:#fff;cursor:pointer;font-weight:600;font-size:14px;transition:all 0.2s}
+.mypage-tab:hover{background:#eee}
+.mypage-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.mypage-content{padding:20px}
+.mypage-content h3{margin:0 0 16px 0;font-size:18px}
+.mypage-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}
+.mypage-item{background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 6px rgba(0,0,0,0.06);cursor:pointer;transition:all 0.2s;position:relative}
+.mypage-item:hover{box-shadow:0 4px 12px rgba(0,0,0,0.12)}
+.mypage-item.closed-item{background:#d9d9d9;cursor:pointer}
+.mypage-item.closed-item:hover{box-shadow:0 4px 12px rgba(0,0,0,0.12)}
+.mypage-closed-badge{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.7);color:#fff;padding:8px 16px;border-radius:8px;font-weight:700;font-size:14px;z-index:5}
+.mypage-item-title{font-weight:700;margin:0 0 6px 0;font-size:15px}
+.mypage-item-meta{font-size:13px;color:var(--muted);margin:0}
+.mypage-item-status{display:inline-block;margin-top:8px;padding:4px 8px;background:var(--accent);color:#fff;border-radius:6px;font-size:12px;font-weight:700}
+.mypage-item.closed-item .mypage-item-status{background:#999}
+
+/* 지원자 목록 */
+.applicants-section{margin-top:20px;padding-top:20px;border-top:1px solid #eee}
+.applicants-section h4{margin:0 0 12px 0;font-size:14px}
+.applicants-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.applicant-item{background:#f9f9f9;border-radius:8px;padding:12px;display:flex;justify-content:space-between;align-items:center}
+.applicant-name{font-weight:600;font-size:14px}
+.applicant-btn{padding:6px 12px;background:var(--accent);color:#fff;border:0;border-radius:6px;cursor:pointer;font-size:12px;font-weight:700}
+.applicant-btn:hover{opacity:0.9}
+
+/* 요청 액션 */
+.request-actions{display:flex;gap:10px;margin-top:20px}
+.request-actions button{flex:1}
+.finish-actions{display:flex;gap:10px;margin-top:20px}
+.finish-actions button{flex:1}
+
+/* 채팅 */
+.chat-section{display:grid;grid-template-columns:280px 1fr;gap:14px;min-height:360px}
+.chat-list-container,.chat-content-container{background:#fff;border-radius:10px;box-shadow:0 1px 6px rgba(0,0,0,0.06);padding:12px}
+.chat-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.chat-item{background:#fff;border-radius:10px;padding:12px;box-shadow:0 1px 6px rgba(0,0,0,0.06);cursor:pointer;transition:all 0.2s}
+.chat-item:hover{box-shadow:0 4px 12px rgba(0,0,0,0.12)}
+.chat-item.active{background:#fff4ef;border:1px solid #ffd7c8}
+.chat-person{font-weight:700;font-size:14px;margin:0 0 4px 0}
+.chat-preview{font-size:13px;color:var(--muted);margin:0 0 6px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chat-meta{font-size:12px;color:var(--accent);margin:0;font-weight:600}
+.chat-content{height:100%;display:flex;flex-direction:column}
+.chat-history-header{padding:4px 2px 12px;border-bottom:1px solid #f0f0f0}
+.chat-history-header h4{margin:0;font-size:15px}
+.chat-history-empty{color:#999;text-align:center;padding:30px 0;margin:0}
+.chat-history-list{display:flex;flex-direction:column;gap:10px;padding-top:12px;overflow-y:auto;max-height:320px}
+.chat-history-message{display:flex;flex-direction:column}
+.chat-history-message.mine{align-items:flex-end}
+.chat-history-message.other{align-items:flex-start}
+.chat-history-label{margin:0 0 4px;font-size:11px;color:#888}
+.chat-history-bubble{max-width:82%;padding:10px 12px;border-radius:12px;font-size:13px;line-height:1.4}
+.chat-history-message.mine .chat-history-bubble{background:#ff8a65;color:#fff}
+.chat-history-message.other .chat-history-bubble{background:#f3f3f3;color:#222}
+.chat-history-time{margin:4px 2px 0;font-size:11px;color:#999}
+
+.chat-modal-content{width:90%;max-width:400px;display:flex;flex-direction:column;max-height:600px}
+.chat-messages{flex:1;overflow-y:auto;padding:15px 20px;background:#f9f9f9}
+.chat-message{margin-bottom:12px;display:flex;flex-direction:column}
+.chat-message.mine{align-items:flex-end}
+.chat-message.other{align-items:flex-start}
+.chat-bubble{max-width:70%;padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.4;word-wrap:break-word}
+.chat-message.mine .chat-bubble{background:var(--accent);color:#fff}
+.chat-message.other .chat-bubble{background:#eee;color:#222}
+.chat-time{font-size:11px;color:var(--muted);margin-top:4px}
+
+.chat-input-area{display:flex;gap:8px;padding:12px 20px;border-top:1px solid #eee;background:#fff}
+.chat-input-area input{flex:1;padding:10px;border:1px solid #ddd;border-radius:20px;font-size:13px}
+.chat-input-area button{padding:8px 16px;background:var(--accent);color:#fff;border:0;border-radius:20px;cursor:pointer;font-weight:700;font-size:13px}
+.chat-input-area button:hover{opacity:0.9}
+
+@media (max-width:420px){
+  .topbar-sub .center{padding-left:8px;padding-right:8px}
+}
+
+@media (max-width:768px){
+  .chat-section{grid-template-columns:1fr}
+}
